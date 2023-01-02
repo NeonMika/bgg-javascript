@@ -1,5 +1,5 @@
 import { Attributes, ElementCompact } from 'xml-js'
-import { ElementWithValue } from './xml/ElementWithValue'
+import { ElementWithValue } from './xml/ElementWithValue.js'
 
 export class SubType extends ElementWithValue { }
 

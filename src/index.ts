@@ -1,8 +1,6 @@
 import BGG from "./main/BGG.js";
 
-const x = await BGG.allPlays("test")
-console.log(x)
-
-console.log()
-
-export default BGG
+export * from "./main/BGG.js";
+export * from "./main/Plays.js";
+export * from "./main/User.js";
+export default BGG;

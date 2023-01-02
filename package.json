@@ -1,4 +1,17 @@
 {
+  "name": "neon-bgg",
+  "version": "0.0.2",
+  "description": "A small library to download user stats and play stats from BGG (Board Game Geek).",
+  "main": "./dist/index.js",
+  "files": [
+    "./dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeonMika/bgg-javascript"
+  },
+  "author": "Dr. Markus Weninger",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/d3": "^7.4.0",
