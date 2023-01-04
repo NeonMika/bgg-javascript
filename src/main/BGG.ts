@@ -3,17 +3,39 @@ import { xml2js } from "xml-js";
 import { User } from "./User.js";
 import { Play, Plays } from "./Plays.js";
 
+export class UserOptions {
+  constructor(
+    public buddies?: boolean | number,
+    public guilds?: boolean | number,
+    public hot?: boolean | number,
+    public top?: boolean | number
+    // TODO domain and page
+  ) { }
+
+  static default(): UserOptions {
+    return UserOptions.minimal();
+  }
+
+  static minimal(): UserOptions {
+    return new UserOptions();
+  }
+
+  static full(): UserOptions {
+    return new UserOptions(true, true, true, true);
+  }
+}
+
 export default class BGG {
-  static userURL(username: string): string {
-    return `https://boardgamegeek.com/xmlapi2/user?name=${username}&buddies=1&guilds=1&hot=1&top=1`
+  static userURL(username: string, options = new UserOptions()): string {
+    return `https://boardgamegeek.com/xmlapi2/user?name=${username}&buddies=${options.buddies ? "1" : "0"}&guilds=${options.guilds ? "1" : "0"}&hot=${options.hot ? "1" : "0"}&top=${options.top ? "1" : "0"}`
   }
 
-  static async userXMLString(username: string): Promise<string> {
-    return await d3.text(BGG.userURL(username))
+  static async userXMLString(username: string, options = new UserOptions()): Promise<string> {
+    return await d3.text(BGG.userURL(username, options))
   }
 
-  static async user(username: string): Promise<User> {
-    return new User((xml2js(await BGG.userXMLString(username), { compact: true }) as any).user);
+  static async user(username: string, options = new UserOptions()): Promise<User> {
+    return new User((xml2js(await BGG.userXMLString(username, options), { compact: true }) as any).user);
   }
 
   static playsURL(username: string, page: number = 1) {

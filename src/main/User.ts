@@ -45,6 +45,19 @@ export class LastName extends ElementWithValue { }
 export class PSNAccount extends ElementWithValue { }
 export class StateOrProvince extends ElementWithValue { }
 export class SteamAccount extends ElementWithValue { }
+
+export class TopItem implements ElementCompact {
+  _attributes?: Attributes
+
+  constructor(hotItem: ElementCompact) {
+    Object.assign(this, hotItem)
+  }
+  get rankAttribute(): string { return this._attributes?.rank?.toString() ?? "" }
+  get typeAttribute(): string { return this._attributes?.type?.toString() ?? "" }
+  get idAttribute(): string { return this._attributes?.id?.toString() ?? "" }
+  get nameAttribute(): string { return this._attributes?.name?.toString() ?? "" }
+}
+
 export class TradeRating extends ElementWithValue { }
 export class WebAddress extends ElementWithValue { }
 export class WiiAccount extends ElementWithValue { }
@@ -66,6 +79,7 @@ export class User implements ElementCompact {
   psnaccount: PSNAccount
   stateorprovince: StateOrProvince
   steamaccount: SteamAccount
+  top: TopItem[]
   traderating: TradeRating
   webaddress: WebAddress
   wiiaccount: WiiAccount
@@ -87,6 +101,7 @@ export class User implements ElementCompact {
     this.psnaccount = new PSNAccount(user.psnaccount)
     this.stateorprovince = new StateOrProvince(user.stateorprovince)
     this.steamaccount = new SteamAccount(user.steamaccount)
+    this.top = user.top?.item ? [].concat(user.top.item).map((t: any) => new TopItem(t)) : []
     this.traderating = new TradeRating(user.traderating)
     this.webaddress = new WebAddress(user.webaddress)
     this.wiiaccount = new WiiAccount(user.wiiaccount)
